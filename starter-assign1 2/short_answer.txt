@@ -1,0 +1,73 @@
+Perfect Numbers
+---------------
+Author: Theo Snoey
+
+Q1. Roughly how long did it take your computer to do the search? How many perfect numbers were found and what were they?
+A1. It roughly took 1.33 seconds for my computer to do the search. There were 4 perfect numbers found, and they were 6, 28, 496, 8128
+
+Q2. Make a table of the timing results for `findPerfects` that you observed. (old-school table of text rows and columns is just fine)
+A2.
+___________________
+|size:  |time:    |
+|38750  |0.971sec |
+|77500  |3.793sec |
+|155000 |15.142sec|
+|310000 |60.203sec|
+___________________
+
+Q3. Does it take the same amount of work to compute `isPerfect` on the number 10 as it does on the number 1000? Why or why not? Does it take the same amount of work for `findPerfects` to search the range of numbers from 1-1000 as it does to search the numbers from 1000-2000? Why or why not?
+A3. It does not take the same amount of work to compute 'isPerfect' on the number 10 as it does on the number 1000 because the isperfect function calls the divisorSum function and for 10 the divisor function needs to loop through 10 numbers checking for divisors, but for
+1000, divisor sum needs to loop through 1000 numbers checking for divisors and summing them.
+It does take the same amount of work for find perfects for 1-1000 as 1000-2000 becasue when the divisorSum fucntion is called it needs to loop through the same amount of numbers.
+
+Q4. Extrapolate from the data you gathered and make a prediction: how long will it take `findPerfects` to reach the fifth perfect number?
+A4. I estimate that it will take findperfects roughly 11331 seconds to find the fifth perfect number. 33 million/310000 roughly equates to 106. 106*106 = 11331.
+
+Q5. Do any of the tests still pass even with this broken function? Why or why not?
+A5. Yes, 3 of the tests still pass. This is because the first test that passes is an expect not true result from the function call to the isPerfect function. However, a bug creating an off by one error will
+keep the two numbers: 12 and 98765 still not perfect in most cases becasue the total of divisors will still not equal the number itself. The second test that passes is a time test that is not dependent on whether or not the perfect
+numbers it finds are actually the true sum of divisors of those numbers. It only records the time needed to complete the task if the task can be completed. The third test that passes is a call to something in the soundex file which is not dependent on the divisor or isPerfect function.
+
+Q6. Explain your testing strategy for `smarterSum` and how you chose your specific test cases that lead you to be confident the function is working correctly.
+A6. I chose to use the numbers 25, 1, and -13.8 for my test cases comparing the output of divisorSum to smarterSum. The number 25 has an integer square root so it would be good for examining off by one errors in my for loop.
+The number 1 has no divisors according to our definition that the sum must include all divisors "excluding" itself, so it would be useful to see how my code handled the case where the only divisor was the number itself.
+The number -36.8 can help me understand if my function deals with negative numbers well and numbers that aren't integers.
+
+Q7. Record your timing results for `findPerfectsSmarter` into a table.
+A7.
+_____________________
+|size:   |time:     |
+|1500000 |3.080sec  |
+|3000000 |8.336 sec |
+|6000000 |23.269 sec|
+|12000000|64.171    |
+_____________________
+
+Q8. Make a prediction: how long will `findPerfectsSmarter` take to reach the fifth perfect number?
+A8. The fifth perfect number is 33550336(approx 33 mill). 33 million is 2.75 times the 12 million we already checked. If it takes 64 seconds to check
+12 mil integers, then it should take 64*2.75*sqrt(2.75) seconds to check 33 million. This is roughly 292 seconds.
+
+Q9. Explain how you chose your specific test cases and why they lead you to be confident `findNthPerfectEuclid` is working correctly.
+A9. We don't need to worry about digits that are <= 0, so no negatives and no zeros. I tested if my Euclid function's outputs were perfect using the isPerfect function and the expect testing framework. And also tested if the function outputted the
+correct perfect number using the table of perfect numbers provided to us and comparing it to findNthPerfectEuclid outputs using expect_equal testing.
+
+Soundex
+-------
+
+Q10. What is the Soundex code for "Angelou"? What is the code for your own surname?
+A10. The soundex code for Angelou is A524. The code for my own surname is T000.
+
+Q11. Before writing any code, brainstorm your plan of attack and sketch how you might decompose the work into smaller tasks. Briefly describe your decomposition strategy.
+A11. To decompose this problem into smaller, more manageable tasks, I could write a function that strips a string down only to its letters and a function that converts an individual character to a soundex digit. I could write a function that gets rid of redudant digits in the code. I could write a function
+that discards the zeros from the code and a function that either concatenates the string to 4 chars or adds zeros to make the string 4 chars long.
+
+Q12. Think about one or more examples of a class of names that the Soundex system might not work well for. Explain what this class of names is and why the system might incorrectly group them or mis-categorize one of the names.
+A12. Soundex is based of of English pronounciation, so if we put in non English names that are still represented alphabetically, other pronounciations such as silent vowels and other differnt particular pronounciations will get misrepresented.
+An exmple would be the pinyin alphabet using representation of Mandarin names. the pronounciation style in pinyin is very differnt than in english but names that appear similar that are very differnt may get lumped together.
+
+
+Q13. Suppose you are a software engineer working for the U.S. government. You have been tasked with implementing a system that collects names as part of the Census survey and analyzes these names using a phonetic algorithm. Your boss suggests using Soundex and notes that the algorithm is only expected to work for ASCII-encoded strings, since supporting Unicode would require extra work and time. What would your response be and why? What representational harms might result from building a system that exclusively uses Soundex and/or ASCII?
+A13. My response would be to tell my boss that what we'd be saving in terms of work and time would be a small price to pay to avoid the lack of representation and accuracy by not using unicode. The U.S. is only getting more multicultural, and as the country grows in population size over time and the census size grows as a result, it would be
+better to have built a robust, accurate, and inclusive phonetic algorithm from the start instead of having a system that will be come increasingly innacurate and useless over time. We will save misrepresenting people who don't use english phonetic systems from the start.
+
+
